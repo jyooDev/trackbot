@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css">
+	<title>Trackbot</title>
+</head>
+<body>
+<div>
+<div class="wrapper">
+    <div id="terminal">Incoming message</div>    
+    <button id="connect" class="connection_btn"  type="button">Connect</button>
+<button id="disconnect" type="button" disabled="disabled">Disconnect</button>
+</div>
+<div class="container">
+    <div class="left"><button id="leftCommandButton" onclick="sendCommand(4)"> left </button></div>
+    <div class="right"><button id="rightCommandButton" onclick="sendCommand(5)"> right </button></div>   
+    <div class="forward"><button id="forwardCommandButton" onclick="sendCommand(2)"> forward </button></div>
+    <div class="auto"><button id="enableCommandButton" onclick="sendCommand(1)"> autodriving </button></div>
+    <button id="stopCommandButton" onclick="sendCommand(1)">Stop</button>
+</div>
+</div>
+
+<table>
+<thead>
+<tr>
+    <th>Direction</th>
+    <th>Read</th>
+    <th>Distance</th>
+    <th>Start Notification</th>
+    <th>Stop Notification</th>
+</tr> 
+</thead>
+<tbody>
+<tr>
+    <td>LEFT</td>
+    <td><button class="read" id="leftTofReadButton" type="button" disabled="disabled"><img src="pictures/read.png" width="30px"></button></td>
+    <td><span id="leftTof"></span><span> mm</span></td>
+    <td><button class="startNotify" id="startLeftTofNotifyButton" type="button" disabled="disabled"><span class="button-txt">Start</span></td>
+    <td><button class="stopNotify" id="stopLeftTofNotifyButton" type="button" disabled="disabled"><span>Stop</span></button></td>
+</tr>
+<tr>
+    <td>RIGHT</td>
+    <td><button class="read" id="rightTofReadButton" type="button" disabled="disabled"><img src="pictures/read.png" width="30px"></button></td>
+    <td><span id="rightTof">?</span><span> mm</span></td>
+    <td><button class="startNotify" id="startRightTofNotifyButton" type="button" disabled="disabled"><span>Start</span></button></td>
+    <td><button class="stopNotify" id="stopRightTofNotifyButton" type="button" disabled="disabled"><span>Stop</span></button></td>
+</tr>
+<tr>
+    <td>FRONT</td>
+    <td><button class="read" id="frontUltrasonicReadButton" type="button" disabled="disabled"><img src="pictures/read.png" width="30px"></button></td>
+    <td><span id="frontUltrasonic">?</span><span> cm</span></td>
+    <td><button class="startNotify" id="startFrontUltrasonicNotifyButton" type="button" disabled="disabled"><span>Start</span></td>
+    <td><button class="stopNotify" id="stopFrontUltrasonicNotifyButton" type="button" disabled="disabled"><span>Stop</span></button></td>
+</tr>
+</tbody>
+</table>
+
+<script src="main.js"></script>
+
+</body>
+</html>
