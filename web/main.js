@@ -3,6 +3,7 @@ let container = document.querySelector(".container");
 
 let connectButton = document.getElementById('connect');
 let disconnectButton = document.getElementById('disconnect');
+
 let leftTofReadButton = document.getElementById('leftTofReadButton');
 let rightTofReadButton = document.getElementById('rightTofReadButton');
 let frontUltrasonicReadButton = document.getElementById('frontUltrasonicReadButton');
@@ -21,10 +22,14 @@ let frontUltrasonicContainer = document.getElementById('frontUltrasonic');
 
 let stopCommandButton = document.getElementById('stopCommandButton');
 let forwardCommandButton = document.getElementById('forwardCommandButton');
+let backwardCommandButton = document.getElementById('backwardCommandButton');
 let leftCommandButton = document.getElementById('leftCommandButton');
 let rightCommandButton = document.getElementById('rightCommandButton');
-let enableCommandButton = document.getElementById('enableCommandButton');
+// let enableCommandButton = document.getElementById('enableCommandButton');
 
+
+let manualControlButton = document.getElementById('manualControlButton');
+let autoControlButton = document.getElementById('autoControlButton');
 // Connect to the device on Connect button click
 connectButton.addEventListener('click', function(){connect();});
 
@@ -42,6 +47,8 @@ leftTofReadButton.addEventListener('click', function(){readLeftTof();});
 rightTofReadButton.addEventListener('click', function(){readRightTof();});
 frontUltrasonicReadButton.addEventListener('click', function(){readUltrasonic();});
 
+manualControlButton.addEventListener('click', function(){changeControl(1)});
+autoControlButton.addEventListener('click', function(){changeControl(0)});
 let controlEnabled = false;
 
 // Selected device object cache
@@ -52,6 +59,20 @@ let rightTofCharCache = null;
 let frontUltrasonicCharCache = null;
 let commandCharCache = null;
 
+
+function changeControl(command){
+	if(command == 0){
+		//autoDriving
+		manualControlButton.disabled = false;
+		autoControlButton.disabled = true;
+	}
+	else{
+		//manual driving
+		manualControlButton.disabled = true;
+		autoControlButton.disabled = false;
+	}
+	sendCommand(command);
+}
 function requestBluetoothDevice() {
 	log('Requesting Bluetooth device...');
 	return navigator.bluetooth.requestDevice({
@@ -298,7 +319,6 @@ function readUltrasonic() {
     return frontUltrasonicCharCache.readValue()
         .then(value => frontUltrasonicContainer.innerHTML = value.getInt16(0, true));
 }
-
 function sendCommand(command) {
 	if (command == 0) {
 		controlEnabled = ! controlEnabled;

@@ -42,7 +42,9 @@ body{
 }
 
 #connect,
-#disconnect{
+#disconnect,
+#autoControlButton,
+#manualControlButton{
     background-color: rgb(255, 255, 255);
     border: 3px  solid var(--clr_beige);
     border-radius: 20px;
@@ -111,7 +113,7 @@ body{
     transform: rotate(90deg);
 }
 
-.container .auto{
+.container .backward{
     background-color: var(--clr_auto);
     transform: rotate(180deg);
 }
@@ -165,7 +167,7 @@ body{
     transform: translateY(-20%);
 }
 
-#enableCommandButton{
+#backwardCommandButton{
     border: none;
     background-color: var(--clr_auto);
     color: rgb(0, 0, 0);

@@ -9,15 +9,19 @@
 <body>
 <div>
 <div class="wrapper">
-    <div id="terminal">Incoming message</div>    
-    <button id="connect" class="connection_btn"  type="button">Connect</button>
-<button id="disconnect" type="button" disabled="disabled">Disconnect</button>
+    <div id="terminal">Incoming message</div>  
+    <div id="connectionAndControlButtons">  
+        <button id="connect" class="connection_btn"  type="button">Connect</button>
+        <button id="disconnect" type="button" disabled="disabled">Disconnect</button>
+        <button id="autoControlButton" type="button" disabled="disabled">Auto</button>
+        <button id="manualControlButton" type="button" disabled="disabled">Manual</button>
+    </div>
 </div>
 <div class="container">
     <div class="left"><button id="leftCommandButton" onclick="sendCommand(4)"> left </button></div>
     <div class="right"><button id="rightCommandButton" onclick="sendCommand(5)"> right </button></div>   
     <div class="forward"><button id="forwardCommandButton" onclick="sendCommand(2)"> forward </button></div>
-    <div class="auto"><button id="enableCommandButton" onclick="sendCommand(1)"> autodriving </button></div>
+    <div class="backward"><button id="backwardCommandButton" onclick="sendCommand(3)"> backward </button></div>
     <button id="stopCommandButton" onclick="sendCommand(1)">Stop</button>
 </div>
 </div>
