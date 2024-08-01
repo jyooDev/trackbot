@@ -30,6 +30,8 @@ let rightCommandButton = document.getElementById('rightCommandButton');
 
 let manualControlButton = document.getElementById('manualControlButton');
 let autoControlButton = document.getElementById('autoControlButton');
+
+let automode = false;
 // Connect to the device on Connect button click
 connectButton.addEventListener('click', function(){connect();});
 
@@ -63,11 +65,13 @@ let commandCharCache = null;
 function changeControl(command){
 	if(command == 0){
 		//autoDriving
+		automode=true;
 		manualControlButton.disabled = false;
 		autoControlButton.disabled = true;
 	}
 	else{
 		//manual driving
+		automode=false;
 		manualControlButton.disabled = true;
 		autoControlButton.disabled = false;
 	}
@@ -108,8 +112,9 @@ function connect() {
 				startRightTofNotifyButton.disabled = false;
 			if(frontUltrasonicChar.properties.notify)
 				startFrontUltrasonicNotifyButton.disabled = false;
-			if(commandChar.properties.write)
-				enableCommandButton.disabled = false;
+			// if(commandChar.properties.write)
+				
+			manualControlButton.disabled = false;
 			
 			
 			leftTofCharCache = leftTofChar;
@@ -178,12 +183,12 @@ function disconnect() {
 	rightTofContainer.innerHTML = "?";
 	frontUltrasonicContainer.innerHTML = "?";
 	
-	enableCommandButton.disabled = true;
+	// enableCommandButton.disabled = true;
 	forwardCommandButton.disabled = true;
 	stopCommandButton.disabled = true;
 	leftCommandButton.disabled = true;
 	rightCommandButton.disabled = true;
-	enableCommandButton.innerText = "Enable Control";	
+	// enableCommandButton.innerText = "Enable Control";	
 }
 
 function handleDisconnection(event) {
@@ -319,37 +324,69 @@ function readUltrasonic() {
     return frontUltrasonicCharCache.readValue()
         .then(value => frontUltrasonicContainer.innerHTML = value.getInt16(0, true));
 }
+
 function sendCommand(command) {
-	if (command == 0) {
-		controlEnabled = ! controlEnabled;
-		if (!controlEnabled) {
-			// forwardCommandButton.disabled = true;
-			// stopCommandButton.disabled = true;
-			// leftCommandButton.disabled = true;
-			// rightCommandButton.disabled = true;	
-			enableCommandButton.innerText = "Enable Control";
-		}
-		else {
-			// forwardCommandButton.disabled = false;
-			// stopCommandButton.disabled = false;
-			// leftCommandButton.disabled = false;
-			// rightCommandButton.disabled = false;
-			enableCommandButton.innerText = "Disable Control";	
-			command = 1;
-		}		
-	}		
+	if (command == 0){
+		automode = true;
+		container.style.transform = "rotate(0deg)";
+		leftCommandButton.disabled = true;
+		rightCommandButton.disabled = true;
+		forwardCommandButton.disabled = true;
+		backwardCommandButton.disabled = true;
+		stopCommandButton.disabled = true;
+		// while(automode){
+		// 	autoCommand = commandCharCache.readValue().then(value => value.getInt16(0,true));
+		// 	if (autoCommand == 1 || autoCommand == 2 || autoCommand == 3)
+		// 	{
+		// 		container.style.transform = "rotate(0deg)";
+		// 	}
+		// 	else if (autoCommand = 4){
+		// 		container.style.transform = "rotate(-30deg)";
+		// 	}
+		// 	else if (autoCommand = 5){
+		// 		container.style.transform = "rotate(30deg)";
+		// 	}
+		// }
+	}
+	else if (command == 1){
+		container.style.transform = "rotate(0deg)";
+		leftCommandButton.disabled = true;
+		rightCommandButton.disabled = true;
+		forwardCommandButton.disabled = false;
+		backwardCommandButton.disabled = false;
+		stopCommandButton.disabled = false;
+	}
+	else if (command == 2){ //forward
+		container.style.transform = "rotate(0deg)";
+		leftCommandButton.disabled = false;
+		rightCommandButton.disabled = false;
+		forwardCommandButton.disabled = true;
+		backwardCommandButton.disabled = true;
+		stopCommandButton.disabled = false;
+	}
+	else if (command == 3){ //backward
+		container.style.transform = "rotate(0deg)";
+		leftCommandButton.disabled = true;
+		rightCommandButton.disabled = true;
+		forwardCommandButton.disabled = false;
+		backwardCommandButton.disabled = true;
+		stopCommandButton.disabled = false;
+	}
 	else if (command == 4)	{		// turn left
 		container.style.transform = "rotate(-30deg)";
-		// rightCommandButton.disabled = true;
+		leftCommandButton.disabled = true;	
+		rightCommandButton.disabled = true;
+		forwardCommandButton.disabled = false;
+		backwardCommandButton.disabled = false;
+		stopCommandButton.disabled = false;
 	}
 	else if (command == 5) {		// turn right
 		container.style.transform = "rotate(30deg)"
-		// leftCommandButton.disabled = true;
-	}
-	else {
-		container.style.transform = "rotate(0deg)";
-		// leftCommandButton.disabled = false;
-		// rightCommandButton.disabled = false;		
+		leftCommandButton.disabled = true;
+		rightCommandButton.disabled = true;
+		forwardCommandButton.disabled = false;
+		backwardCommandButton.disabled = false;
+		stopCommandButton.disabled = false;
 	}
    const commandArray = Uint8Array.of(command);
    return commandCharCache.writeValueWithResponse(commandArray) .
