@@ -4,10 +4,6 @@ let container = document.querySelector(".container");
 let connectButton = document.getElementById('connect');
 let disconnectButton = document.getElementById('disconnect');
 
-let leftTofReadButton = document.getElementById('leftTofReadButton');
-let rightTofReadButton = document.getElementById('rightTofReadButton');
-let frontUltrasonicReadButton = document.getElementById('frontUltrasonicReadButton');
-
 let startLeftTofNotifyButton = document.getElementById('startLeftTofNotifyButton');
 let stopLeftTofNotifyButton = document.getElementById('stopLeftTofNotifyButton');
 let startRightTofNotifyButton = document.getElementById('startRightTofNotifyButton');
@@ -31,7 +27,6 @@ let rightCommandButton = document.getElementById('rightCommandButton');
 let manualControlButton = document.getElementById('manualControlButton');
 let autoControlButton = document.getElementById('autoControlButton');
 
-let automode = false;
 // Connect to the device on Connect button click
 connectButton.addEventListener('click', function(){connect();});
 
@@ -45,9 +40,6 @@ stopRightTofNotifyButton.addEventListener('click', function(){stopRightTofNotifi
 startFrontUltrasonicNotifyButton.addEventListener('click', function(){startFrontUltrasonicNotifications();});
 stopFrontUltrasonicNotifyButton.addEventListener('click', function(){stopFrontUltrasonicNotifications();});
 
-leftTofReadButton.addEventListener('click', function(){readLeftTof();});
-rightTofReadButton.addEventListener('click', function(){readRightTof();});
-frontUltrasonicReadButton.addEventListener('click', function(){readUltrasonic();});
 
 manualControlButton.addEventListener('click', function(){changeControl(1)});
 autoControlButton.addEventListener('click', function(){changeControl(0)});
@@ -65,13 +57,11 @@ let commandCharCache = null;
 function changeControl(command){
 	if(command == 0){
 		//autoDriving
-		automode=true;
 		manualControlButton.disabled = false;
 		autoControlButton.disabled = true;
 	}
 	else{
 		//manual driving
-		automode=false;
 		manualControlButton.disabled = true;
 		autoControlButton.disabled = false;
 	}
@@ -103,17 +93,13 @@ function connect() {
 			return Promise.all([leftTofChar, rightTofChar, frontUltrasonicChar, commandChar])
 		}).
 		then(([leftTofChar, rightTofChar, frontUltrasonicChar, commandChar]) => {
-			leftTofReadButton.disabled = false;
-			rightTofReadButton.disabled = false;
-			frontUltrasonicReadButton.disabled = false;
 			if(leftTofChar.properties.notify)
 				startLeftTofNotifyButton.disabled = false;
 			if(rightTofChar.properties.notify)
 				startRightTofNotifyButton.disabled = false;
 			if(frontUltrasonicChar.properties.notify)
 				startFrontUltrasonicNotifyButton.disabled = false;
-			// if(commandChar.properties.write)
-				
+
 			manualControlButton.disabled = false;
 			
 			
@@ -203,9 +189,6 @@ function handleDisconnection(event) {
 		return Promise.all([leftTofChar, rightTofChar, frontUltrasonicChar, commandChar])
 	}).
 	then(([leftTofChar, rightTofChar, frontUltrasonicChar, commandChar]) => {
-			leftTofReadButton.disabled = false;
-			rightTofReadButton.disabled = false;
-			frontUltrasonicReadButton.disabled = false;
 			if(leftTofChar.properties.notify)
 				startLeftTofNotifyButton.disabled = false;
 			if(rightTofChar.properties.notify)
@@ -310,24 +293,8 @@ function stopFrontUltrasonicNotifications() {
       });
 }
 
-function readLeftTof() {
-    return leftTofCharCache.readValue()
-        .then(value => leftTofContainer.innerHTML = value.getInt16(0, true));
-}
-
-function readRightTof() {
-    return rightTofCharCache.readValue()
-        .then(value => rightTofContainer.innerHTML = value.getInt16(0, true));
-}
-
-function readUltrasonic() {
-    return frontUltrasonicCharCache.readValue()
-        .then(value => frontUltrasonicContainer.innerHTML = value.getInt16(0, true));
-}
-
 function sendCommand(command) {
 	if (command == 0){
-		automode = true;
 		container.style.transform = "rotate(0deg)";
 		leftCommandButton.disabled = true;
 		rightCommandButton.disabled = true;
@@ -361,7 +328,7 @@ function sendCommand(command) {
 		leftCommandButton.disabled = false;
 		rightCommandButton.disabled = false;
 		forwardCommandButton.disabled = true;
-		backwardCommandButton.disabled = true;
+		backwardCommandButton.disabled = false;
 		stopCommandButton.disabled = false;
 	}
 	else if (command == 3){ //backward

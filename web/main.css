@@ -213,17 +213,6 @@ table{
         padding: 0.5rem 2rem;
     }
 
-    .read{
-        background-color: var(--clr_beige);
-        border-radius: 20% ;
-        border-style: none;
-        transition: 0.3s;
-    }
-
-    .read:hover{
-        background-color: var(--clr_beige_hover);
-    }
-
     .startNotify{
         display: inline-flex;
         height: 30px;
