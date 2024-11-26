@@ -16,7 +16,7 @@ Welcome to the Trackbot project! This project involves developing a simple robot
 
 - **VL53L0X ToF Sensors:** These sensors are used to measure the distance of obstacles on both sides of the Trackbot.
 - **Ultrasonic Sensor:** Measures the distance of obstacles in front of the Trackbot, enhancing its ability to detect and avoid obstacles.
-- **Microcontroller:** The Trackbot is powered by the EFR32MG12P Microcontroller, which manages the sensor readings and controls the motors based on the distance data【14†source】.
+- **Microcontroller:** The Trackbot is powered by the EFR32MG12P Microcontroller, which manages the sensor readings and controls the motors based on the distance data.
 - **Motors:** Drives the Trackbot forward, backward, left, or right, based on sensor inputs.
 
 ### Software
