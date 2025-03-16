@@ -1,5 +1,5 @@
 # Trackbot Project
-Welcome to the Trackbot project! This project involves developing a simple robot using two different proximity sensors (Time-of-Flight and Ultrasonic) to navigate and avoid obstacles autonomously. The project integrates hardware components with software implementations in C and JavaScript, enabling real-time control and monitoring through a web interface.
+This project involves developing a simple robot using two different proximity sensors (Time-of-Flight and Ultrasonic) to navigate and avoid obstacles autonomously. The project integrates hardware components with software implementations in C and JavaScript, enabling real-time control and monitoring through a web interface.
 
 ![web-and-trackbot](materials/readme-image1.png)
 
